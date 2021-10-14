@@ -1,0 +1,7 @@
+[
+    {"id": 1, "quantity": 0, "name": "SNES"},
+    {"id": 1, "quantity": 10, "name": "N64"},
+    {"id": 3, "quantity": 5, "name": "PS1"},
+    {"id": 4, "quantity": 4, "name": "Mega"},
+    {"id": 5, "quantity": 1, "name": "Atari"}
+]

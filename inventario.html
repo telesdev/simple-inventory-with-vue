@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 2 - Inventário</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <img :src='img' alt='ff6'>
+
+        <h1 v-html='store'></h1>
+
+        <ul>
+            <li v-for="(product, index) in products" :key="index">
+                <button @click='product.quantity -= 1' :disabled='product.quantity <= 0'> - </button>
+                <button @click='product.quantity += 1'> + </button>
+                <input type="number" min='0' v-model.number="product.quantity">
+                <span>{{ product.name }}</span>
+
+                <span style="font-size: xx-small; color: orange;" v-if="product.quantity === 0">
+                    (Sem Estoque)
+                </span>
+            </li>
+        </ul>
+        <h2>Total em Estoque: {{ totalProducts }}</h2>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    img: 'https://upload.wikimedia.org/wikipedia/pt/9/95/Ffvi_japanese.png',
+                    store:'<span style="font-size: large;">My</span> <span style="font-size: small;">Store</span>',
+                    products: []
+                }
+            },
+            created() {
+                fetch('./inv.json')
+                .then(res => res.json())
+                .then(res => this.products = res)
+            },
+            computed: {
+                totalProducts() {
+                    return this.products.reduce((sum,product) => sum + product.quantity, 0)
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
